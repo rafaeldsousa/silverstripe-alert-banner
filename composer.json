@@ -1,0 +1,17 @@
+{
+    "name": "dnadesign/silverstripe-alert-banner",
+    "description": "Adds an alert banner to top of page to present some sort of information and link to internal/external pages",
+    "license": "BSD-3-Clause",
+    "require": {
+        "gorriecoe/silverstripe-linkfield": "^1.0",
+        "gorriecoe/silverstripe-link": "^1.2",
+        "unclecheese/display-logic": "^2.0.2",
+        "ryanpotter/silverstripe-color-field": "^1.0"
+    },
+    "extra": {
+        "installer-name": "silverstripe-alert-banner",
+        "expose": [
+            "client"
+        ]
+    }
+}

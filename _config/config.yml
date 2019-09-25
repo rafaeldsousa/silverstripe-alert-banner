@@ -1,0 +1,6 @@
+---
+name: silverstripe-alert-banner
+---
+
+DNADesign\AlertBanner\PageControllerExtension:
+  live_reload_port: 35777

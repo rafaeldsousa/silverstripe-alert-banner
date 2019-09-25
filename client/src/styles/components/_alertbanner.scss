@@ -1,0 +1,222 @@
+/*
+#alertBanner
+
+MBIB-24 alertBanner (see page 50-51)
+
+Template: ElementalertBanner
+
+Styleguide 6.2.5
+
+*/
+
+.alertBanner {
+  max-height: 0;
+	overflow: hidden;
+	transition: max-height .5s ease;
+
+  &.active {
+		max-height: 500px;
+
+		@include respond(print) {
+			border-bottom: 1px solid black;
+		}
+  }
+
+  &-linkwrap {
+    width: 100%;
+
+		@include respond(md) {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: auto;
+		}
+
+	}
+
+	&-link {
+		margin-bottom: 0;
+		margin-right: 50px;
+		position: relative;
+		text-align: left;
+		white-space: normal;
+
+		@include respond(lg) {
+			font-size: 16px;
+			text-align: center;
+		}
+	}
+
+	&-dismiss {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+
+		&--button {
+			background: $closeIcon no-repeat;
+			width: 35px;
+			height: 35px;
+			text-indent: 99999px;
+			overflow: hidden;
+			border: none;
+			background-size: 35px;
+			background-position: center;
+
+			@include respond(lg) {
+				width: 40px;
+				height: 40px;
+				background-size: 40px;
+			}
+		}
+  }
+
+  &--green {
+    .alertBanner-icon {
+      background-image: $greenTick;
+    }
+  }
+  &--red {
+    .alertBanner-icon {
+      background-image: $redCross;
+    }
+  }
+  &--fact {
+    .alertBanner-icon {
+      background-image: $factBlue;
+    }
+  }
+  &--tip {
+    .alertBanner-icon {
+      background-image: $tipBlue;
+    }
+  }
+  &--exclamation-mark {
+    .alertBanner-icon {
+      background-image: $exclamationMark;
+    }
+  }
+  &--question {
+    .alertBanner-icon {
+      background-image: $questionMark;
+    }
+  }
+}
+
+.alertBanner-content {
+  margin-bottom: 10px;
+  max-width: 500px;
+
+  @include respond(md) {
+    margin-bottom: 0;
+    margin-left: 20px;
+  }
+
+}
+
+.alertBanner-icon {
+	margin: 0 10px 0 0;
+	display: block;
+	width: 100%;
+	max-width: 80px;
+  max-height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @include respond(xs, 'max') {
+    max-width: 100%;
+    background-size: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+	}
+
+	@include respond(sm) {
+    margin-right: 30px;
+	}
+
+	@include respond(print) {
+		display: none !important;
+	}
+}
+
+.alertBanner-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+  position: relative;
+
+  @include respond(print) {
+		padding: 10px;
+		text-align: left;
+		background: none !important;
+  }
+}
+
+
+.alertBanner-title {
+  margin: 0 0 10px;
+
+  @include respond(md) {
+    margin-bottom: 20px;
+  }
+}
+
+.alertBanner-description {
+	color: $brand-black80;
+
+	*:last-child {
+		margin-bottom: 0;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: underline;
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+			opacity: 0.8;
+		}
+	}
+}
+
+.alertBanner--green {
+	background: $brand-green10;
+
+	.alertBanner-title {
+		color: $brand-green;
+	}
+}
+
+.alertBanner--red,
+.alertBanner--exclamation-mark {
+	background: $brand-red10;
+
+	.alertBanner-title {
+		color: $brand-red;
+	}
+}
+
+.alertBanner--fact {
+	background: $brand-blue10;
+
+	.alertBanner-title {
+		color: $brand-blue;
+	}
+}
+
+.alertBanner--alertBanner {
+	background: $brand-black10;
+
+	.alertBanner-title {
+		color: $brand-blue;
+	}
+}
+
+.alertBanner--question {
+	background: $brand-gold-light;
+
+	.alertBanner-title {
+		color: $brand-gold;
+	}
+}

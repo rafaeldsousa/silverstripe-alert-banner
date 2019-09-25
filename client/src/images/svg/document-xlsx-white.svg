@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Document-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Excel-white" fill="#FFFFFF">
+            <path d="M0,20 L20,20 L20,0 L0,0 L0,20 Z M1,19 L19,19 L19,1 L1,1 L1,19 Z" id="Fill-1"></path>
+            <polygon id="Fill-2" points="7.645 15.3468 10.008 11.6968 12.371 15.3468 15.679 15.3468 11.898 9.7568 15.435 4.4768 12.11 4.4768 10.008 7.8828 7.874 4.4768 4.565 4.4768 8.118 9.7738 4.321 15.3468"></polygon>
+        </g>
+    </g>
+</svg>
