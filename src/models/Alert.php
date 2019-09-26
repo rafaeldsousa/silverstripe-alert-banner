@@ -4,17 +4,17 @@ namespace DNADesign\AlertBanner;
 
 use gorriecoe\Link\Models\Link;
 use gorriecoe\LinkField\LinkField;
+use RyanPotter\SilverStripeColorField\Forms\ColorField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Assets\Image;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
-use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\TextField;
-
+use SilverStripe\Security\PermissionProvider;
 
 class Alert extends DataObject implements PermissionProvider
 {
@@ -22,12 +22,19 @@ class Alert extends DataObject implements PermissionProvider
         'Title' => 'Text',
         'Description' => 'HTMLText',
         'Global' => 'Boolean',
-        'Scheme' => 'Varchar(15)',
+        'BgColor' => 'Varchar(7)',
+        'FontColor' => 'Varchar(7)',
     );
 
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
-        'ButtonLink' => Link::class
+        'ButtonLink' => Link::class,
+        'Icon' => Image::class
+
+    ];
+
+    private static $owns = [
+        'Icon'
     ];
 
     private static $many_many = [
@@ -90,8 +97,7 @@ class Alert extends DataObject implements PermissionProvider
         $fields->removeByName('Description');
         $fields->removeByName('ButtonLinkID');
         $fields->removeByName('DisplayedPageID');
-        $fields->removeByName('AlertIconID');
-        $fields->removeByName('EmergencyIconID');
+        $fields->removeByName('IconID');
         $fields->removeByName('TitleLinkID');
 
         $fields->addFieldsToTab('Root.Main', array(
@@ -116,7 +122,9 @@ class Alert extends DataObject implements PermissionProvider
         ));
 
         $fields->addFieldsToTab('Root.Style', array(
-            DropdownField::create('Scheme', 'Scheme', $this->schemes)
+            ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
+            ColorField::create('FontColor', 'Font Color')->setDescription('Default Color is white (#FFFFFF)'),
+            UploadField::create('Icon', 'Icon')
         ));
 
         $displayedPage->hideIf('Global')->isChecked()->end();
