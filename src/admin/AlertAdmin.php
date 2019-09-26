@@ -1,24 +1,16 @@
 <?php
 
-namespace DNADesign\AlertBanner;
-
-use SilverStripe\Admin\ModelAdmin;
-use SilverStripe\Forms\GridField\GridField;
-
 class AlertAdmin extends ModelAdmin
 {
   private static $managed_models = [
-    Alert::class
+    'Alert'
   ];
 
   private static $url_segment = 'alerts';
 
   private static $menu_title = 'Alerts';
 
-
-  // private static $menu_icon = 'mysite/images/icons/alert.png';
-
-  private static $menu_priority = 0.3;
+  // private static $menu_priority = 0.3;
 
   public function getEditForm($id = null, $fields = null)
   {

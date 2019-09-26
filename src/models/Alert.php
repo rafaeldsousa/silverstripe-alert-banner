@@ -1,35 +1,19 @@
 <?php
 
-namespace DNADesign\AlertBanner;
-
-use gorriecoe\Link\Models\Link;
-use gorriecoe\LinkField\LinkField;
-use RyanPotter\SilverStripeColorField\Forms\ColorField;
-use SilverStripe\AssetAdmin\Forms\UploadField;
-use SilverStripe\Assets\Image;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\Security\Permission;
-use SilverStripe\Versioned\Versioned;
-use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Forms\TextField;
-use SilverStripe\Security\PermissionProvider;
-
 class Alert extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title' => 'Text',
         'Description' => 'HTMLText',
         'Global' => 'Boolean',
-        'BgColor' => 'Varchar(7)',
-        'FontColor' => 'Varchar(7)',
+        'BgColor' => 'Color',
+        'FontColor' => 'Color',
     );
 
     private static $has_one = [
-        'DisplayedPage' => SiteTreeLink::class,
-        'ButtonLink' => Link::class,
-        'Icon' => Image::class
+        'DisplayedPage' => 'Link',
+        'ButtonLink' => 'Link',
+        'Icon' => 'Image'
 
     ];
 
@@ -38,7 +22,7 @@ class Alert extends DataObject implements PermissionProvider
     ];
 
     private static $many_many = [
-        'Exceptions' => SiteTreeLink::class
+        'Exceptions' => 'Link'
     ];
 
     private static $many_many_extraFields = [
@@ -100,25 +84,23 @@ class Alert extends DataObject implements PermissionProvider
         $fields->removeByName('IconID');
         $fields->removeByName('TitleLinkID');
 
+        $ExceptionsGrid = GridFieldConfig_RecordEditor::create();
+
         $fields->addFieldsToTab('Root.Main', array(
             $title = TextField::create('Title'),
             $description = HTMLEditorField::create('Description'),
 
             $global = CheckboxField::create('Global', 'Show on all pages'),
 
-            $buttonlink = Wrapper::create(
+            $buttonlink = DisplayLogicWrapper::create(
                 LinkField::create('ButtonLink', 'Button link', $this)
             ),
 
-            $displayedPage = Wrapper::create(
+            $displayedPage = DisplayLogicWrapper::create(
                 LinkField::create('DisplayedPage', 'Alert Page', $this)
             ),
 
-            $exceptions = Wrapper::create(LinkField::create(
-                'Exceptions',
-                'Exceptions',
-                $this
-            )->setSortColumn('Sort'))
+            $exceptions = DisplayLogicWrapper::create(GridField::create('Exceptions', 'Exceptions', $this->Exceptions(), $ExceptionsGrid))
         ));
 
         $fields->addFieldsToTab('Root.Style', array(
