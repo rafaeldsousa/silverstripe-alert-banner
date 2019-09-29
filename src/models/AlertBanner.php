@@ -93,11 +93,11 @@ class AlertBanner extends DataObject implements PermissionProvider
             $global = CheckboxField::create('Global', 'Show on all pages'),
 
             $buttonlink = DisplayLogicWrapper::create(
-                LinkField::create('ButtonLink', 'Button link', $this)
+                LinkField::create('ButtonLinkID', 'Button link', $this)
             ),
 
             $displayedPage = DisplayLogicWrapper::create(
-                LinkField::create('DisplayedPage', 'Alert Page', $this)
+                LinkField::create('DisplayedPageID', 'Alert Page', $this)
             ),
 
             $exceptions = DisplayLogicWrapper::create(GridField::create('Exceptions', 'Exceptions', $this->Exceptions(), $ExceptionsGrid))
