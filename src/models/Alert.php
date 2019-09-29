@@ -54,15 +54,6 @@ class Alert extends DataObject implements PermissionProvider
         'FormattedShowSinglePage' => 'Show on single page'
     ];
 
-    private $schemes = array(
-        'red' => 'Cross',
-        'green' => 'Tick',
-        'fact' => 'Fact',
-        'tip' => 'Tip',
-        'exclamation-mark' => 'Exclamation mark',
-        'question' => 'Question mark'
-    );
-
     private static $default_sort = 'ID DESC';
 
     public function FormattedGlobal()
