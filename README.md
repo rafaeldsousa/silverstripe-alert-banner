@@ -14,6 +14,10 @@ PageController:
     - DNADesign\AlertBanner\PageControllerExtension
 ```
 
+## Styling Alert Banner
+
+In your Alert Banner element, click on the style tab and choose the background color, font color and Icon that the banner should use.
+
 ## CMS
 
 ## Testing
