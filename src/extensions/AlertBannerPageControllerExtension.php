@@ -5,7 +5,7 @@
  * The configuration option is surfaced to the CMS UI. The extension needs to be added
  * to the object related to the policed controller.
  */
-class AlertPageControllerExtension extends DataExtension
+class AlertBannerPageControllerExtension extends DataExtension
 {
 
   private static $allowed_actions = array(
@@ -18,10 +18,10 @@ class AlertPageControllerExtension extends DataExtension
       $port = Config::inst()->get($this->class, 'live_reload_port');
       Requirements::javascript(sprintf('http://localhost:%s/livereload.js', $port));
     } else {
-      Requirements::css(ALERT_PATH . '/client/dist/main.css');
+      Requirements::css(ALERTBANNER_PATH . '/client/dist/main.css');
     }
 
-    Requirements::javascript(ALERT_PATH . '/client/dist/main.js');
+    Requirements::javascript(ALERTBANNER_PATH . '/client/dist/main.js');
   }
 
   public function isModuleLiveReload()
@@ -35,12 +35,12 @@ class AlertPageControllerExtension extends DataExtension
 
   public function setBannerApplies($data)
   {
-    Session::add_to_array('Alerts', $data->postVar('id'));
+    Session::add_to_array('AlertBanners', $data->postVar('id'));
   }
 
   public function getAlertBanners()
   {
-    $alerts = Alert::get()->filterByCallback(function ($alert) {
+    $alerts = AlertBanner::get()->filterByCallback(function ($alert) {
       return $this->alertCanShow($alert);
     })->sort(array(
       // Prioritise Global and Emergency Alerts
@@ -52,7 +52,7 @@ class AlertPageControllerExtension extends DataExtension
 
   public function alertCanShow($alert)
   {
-    $alerts = Session::get('Alerts');
+    $alerts = Session::get('AlertBanners');
     $show = true;
 
     if ($alert->Global == 1) {

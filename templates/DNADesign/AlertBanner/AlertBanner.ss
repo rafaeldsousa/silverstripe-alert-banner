@@ -1,4 +1,4 @@
-<div class="banners">
+<div class="alertBanner-list">
 	<% loop $AlertBanners %>
 		<div class="alertBanner active" <% if $BgColor %>style="background-color: $BgColor !important"<% end_if %>>
 			<div class="alertBanner-container">
@@ -33,7 +33,7 @@
 									<% end_if %>
 								<% end_if %>
 							<% with $ButtonLink %>
-								<a href="$URL" class="alertBanner-link pure-button">$Title</a>
+								<a href="$URL" class="alertBanner-link">$Title</a>
 							<% end_with %>
 						<% end_if %>
 					</div>

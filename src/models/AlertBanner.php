@@ -1,6 +1,6 @@
 <?php
 
-class Alert extends DataObject implements PermissionProvider
+class AlertBanner extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title' => 'Text',
@@ -33,7 +33,7 @@ class Alert extends DataObject implements PermissionProvider
 
     private static $summary_fields = [
         'Title' => 'Title',
-        'FormattedDisplay' => 'Alert shown',
+        'FormattedDisplay' => 'Alert Banner shown',
         'FormattedGlobal' => 'Show on all pages',
         'FormattedShowSinglePage' => 'Show on single page'
     ];

@@ -3,5 +3,5 @@ Name: silverstripe-alert-banner
 After: 'framework/*','cms/*'
 ---
 
-AlertPageControllerExtension:
+AlertBannerPageControllerExtension:
   live_reload_port: 35777

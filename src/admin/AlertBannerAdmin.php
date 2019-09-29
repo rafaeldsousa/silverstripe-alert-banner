@@ -1,14 +1,14 @@
 <?php
 
-class AlertAdmin extends ModelAdmin
+class AlertBannerAdmin extends ModelAdmin
 {
   private static $managed_models = [
-    'Alert'
+    'AlertBanner'
   ];
 
-  private static $url_segment = 'alerts';
+  private static $url_segment = 'alert-banners';
 
-  private static $menu_title = 'Alerts';
+  private static $menu_title = 'Alert Banners';
 
   // private static $menu_priority = 0.3;
 
