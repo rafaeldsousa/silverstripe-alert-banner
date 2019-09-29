@@ -126,7 +126,7 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     public function getDisplayed()
     {
-        if ($isPublished = Versioned::get_by_stage(Alert::class, 'Live')->byID($this->ID)) {
+        if ($isPublished = Versioned::get_by_stage(AlertBanner::class, 'Live')->byID($this->ID)) {
             return 1;
         }
         return 0;
