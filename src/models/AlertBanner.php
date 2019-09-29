@@ -16,7 +16,7 @@ use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Security\PermissionProvider;
 
-class Alert extends DataObject implements PermissionProvider
+class AlertBanner extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title' => 'Text',
