@@ -46,7 +46,7 @@ class PageControllerExtension extends DataExtension
   {
     $session = $this->getSession();
 
-    $alerts = $session->get('Alerts');
+    $alerts = $session->get('AlertBanners');
 
     $sessionData = $alerts ?: [];
     array_push($sessionData, $data->postVar('id'));
@@ -55,7 +55,7 @@ class PageControllerExtension extends DataExtension
 
   public function getAlerts()
   {
-    $alerts = Alert::get()->filterByCallback(function ($alert) {
+    $alerts = AlertBanner::get()->filterByCallback(function ($alert) {
       return $this->alertCanShow($alert);
     })->sort(array(
       // Prioritise Global and Emergency Alerts
@@ -68,7 +68,7 @@ class PageControllerExtension extends DataExtension
   public function alertCanShow($alert)
   {
     $session = $this->getSession();
-    $alerts = $session->get('Alerts');
+    $alerts = $session->get('AlertBanners');
     $show = true;
 
     if ($alert->Global == 1) {
