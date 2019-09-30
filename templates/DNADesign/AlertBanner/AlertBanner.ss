@@ -29,6 +29,10 @@
 												color: $BgColor !important;
 												background-color: $FontColor !important;
 											}
+											.alertBanner-link:focus {
+												color: $BgColor !important;
+												background-color: $FontColor !important;
+											}
 										</style>
 									<% end_if %>
 								<% end_if %>
