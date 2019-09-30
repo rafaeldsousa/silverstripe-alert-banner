@@ -77,7 +77,7 @@ Styleguide 6.2.5
       cursor: pointer;
       transition: opacity .3s ease;
 
-      &:hover, :focus {
+      &:hover, &:focus {
         opacity: 1;
       }
       &:before, &:after {
