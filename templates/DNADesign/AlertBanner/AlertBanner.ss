@@ -8,9 +8,6 @@
 						</div>
 				<% end_if %>
 				<div class="alertBanner-content" <% if $FontColor %>style="color: $FontColor !important"<% end_if %>>
-					<% if not HideTitle %>
-						<h3 class="alertBanner-title" <% if $FontColor %>style="color: $FontColor !important"<% end_if %>>$Title</h3>
-					<% end_if %>
 					<div class="alertBanner-description">
 						$Description
 					</div>
