@@ -74,7 +74,11 @@ class AlertBannerPageControllerExtension extends DataExtension
         return false;
       }
 
-      if ($this->owner->ID !== $displayedPage->getLinkedPageID()) {
+      if (!$displayedPage->Type === "SiteTree") {
+        return false;
+      }
+
+      if ($this->owner->ID !== $displayedPage->SiteTreeID) {
         return false;
       }
     }
