@@ -69,7 +69,7 @@ class AlertBannerPageControllerExtension extends DataExtension
         }
       }
     } else {
-      $displayedPage = $alert->DisplayedPage;
+      $displayedPage = $alert->DisplayedPage();
       if (empty($displayedPage)) {
         return false;
       }
