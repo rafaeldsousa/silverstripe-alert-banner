@@ -8,6 +8,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         'Global' => 'Boolean',
         'BgColor' => 'Color',
         'FontColor' => 'Color',
+        'ContentAlignment' => 'Enum("Top,Center,Bottom","Center")'
     );
 
     private static $has_one = [
@@ -102,6 +103,12 @@ class AlertBanner extends DataObject implements PermissionProvider
 
             $exceptions = DisplayLogicWrapper::create(GridField::create('Exceptions', 'Exceptions', $this->Exceptions(), $ExceptionsGrid))
         ));
+
+        $aligmentOptions = $this->dbObject('ContentAlignment');
+        if ($aligmentOptions) {
+            $aligmentOptions = $aligmentOptions->enumValues();
+            $fields->addFieldToTab('Root.Style', DropdownField::create('ContentAlignment', 'Content Alignment (Icon & Text)', $aligmentOptions));
+        }
 
         $fields->addFieldsToTab('Root.Style', array(
             ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
