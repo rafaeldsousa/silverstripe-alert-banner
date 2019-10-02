@@ -106,9 +106,13 @@ Styleguide 6.2.5
 }
 
 .alertBanner-description {
-    max-height: 275px;
-    overflow: hidden;
-    margin-bottom: 20px;
+  max-height: 275px;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  & > * {
+    color: #FFF;
+  }
 }
 
 
@@ -120,11 +124,6 @@ Styleguide 6.2.5
     margin-bottom: 0;
     margin-left: 20px;
   }
-
-  & > * {
-    color: #FFF;
-  }
-
 }
 
 .alertBanner-icon {

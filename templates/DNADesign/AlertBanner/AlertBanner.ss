@@ -10,7 +10,7 @@
 				<div class="alertBanner-content" <% if $FontColor %>style="color: $FontColor !important"<% end_if %>>
 					<% if $FontColor %>
 						<style>
-							.alertBanner-content > * {
+							.alertBanner-description > * {
 								color: $FontColor !important;
 							}
 						</style>
