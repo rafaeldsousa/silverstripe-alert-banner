@@ -121,6 +121,10 @@ Styleguide 6.2.5
     margin-left: 20px;
   }
 
+  & > * {
+    color: #FFF;
+  }
+
 }
 
 .alertBanner-icon {
