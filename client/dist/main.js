@@ -959,7 +959,7 @@ function () {
                 thisPage = location.pathname === '/' ? '/home/' : location.pathname;
                 url = [location.protocol, '//', location.host, thisPage].join('');
                 _context.next = 6;
-                return fetch(url + 'setBannerApplies', {
+                return fetch(url + '/setBannerApplies', {
                   method: 'POST',
                   cache: 'no-cache',
                   // *default, no-cache, reload, force-cache, only-if-cached
@@ -1003,19 +1003,41 @@ function () {
         NodeList.prototype.forEach = Array.prototype.forEach;
       }
 
-      var dismiss = document.querySelector('[data-dismiss-banner]');
+      var dismisses = document.querySelectorAll('[data-dismiss-banner]');
 
-      if (dismiss !== null) {
-        dismiss.addEventListener('click', function (e) {
-          e.preventDefault();
-          var target = e.target;
-          var id = target.dataset['bannerId'];
-          var banner = target.closest('.alertBanner');
+      if (dismisses !== null) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-          _this.setBannerCookie(id);
+        try {
+          for (var _iterator = dismisses[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var dismiss = _step.value;
+            dismiss.addEventListener('click', function (e) {
+              e.preventDefault();
+              var target = e.target;
+              var id = target.dataset['bannerId'];
+              var banner = target.closest('.alertBanner');
 
-          _this.dismissBanner(banner);
-        });
+              _this.setBannerCookie(id);
+
+              _this.dismissBanner(banner);
+            });
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
       }
     }
   }]);

@@ -109,6 +109,10 @@ Styleguide 6.2.5
     max-height: 275px;
     overflow: hidden;
     margin-bottom: 20px;
+
+    & > * {
+      color: #FFF;
+    }
 }
 
 

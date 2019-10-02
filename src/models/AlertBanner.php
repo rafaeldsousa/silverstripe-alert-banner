@@ -92,8 +92,8 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->removeByName('TitleLinkID');
 
         $fields->addFieldsToTab('Root.Main', array(
-            $title = TextField::create('Title'),
-            $description = HTMLEditorField::create('Description'),
+            $title = TextField::create('Title')->setDescription('Reference only.'),
+            $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
 
             $global = CheckboxField::create('Global', 'Show on all pages'),
 
