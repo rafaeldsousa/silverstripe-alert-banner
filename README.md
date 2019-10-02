@@ -11,7 +11,7 @@ In your extensions yml file include
 #SS3
 Page_Controller:
   extensions:
-    - AlertBannerPageControllerExtension
+    - AlertBannerControllerExtension
 
 ```
 

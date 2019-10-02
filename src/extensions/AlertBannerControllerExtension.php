@@ -5,7 +5,7 @@
  * The configuration option is surfaced to the CMS UI. The extension needs to be added
  * to the object related to the policed controller.
  */
-class AlertBannerPageControllerExtension extends DataExtension
+class AlertBannerControllerExtension extends DataExtension
 {
 
   private static $allowed_actions = array(

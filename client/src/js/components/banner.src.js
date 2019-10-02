@@ -10,7 +10,7 @@ class AlertBanner {
 
     const thisPage = location.pathname === '/' ? '/home/' : location.pathname,
       url = [location.protocol, '//', location.host, thisPage].join(''),
-      result = await fetch(url + 'setBannerApplies', {
+      result = await fetch(url + '/setBannerApplies', {
         method: 'POST',
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin,
@@ -31,18 +31,20 @@ class AlertBanner {
       NodeList.prototype.forEach = Array.prototype.forEach;
     }
 
-    const dismiss = document.querySelector('[data-dismiss-banner]');
+    const dismisses = document.querySelectorAll('[data-dismiss-banner]');
 
-    if (dismiss !== null) {
-      dismiss.addEventListener('click', e => {
-        e.preventDefault();
-        const target = e.target;
-        const id = target.dataset['bannerId'];
-        const banner = target.closest('.alertBanner');
+    if (dismisses !== null) {
+      for (const dismiss of dismisses) {
+        dismiss.addEventListener('click', e => {
+          e.preventDefault();
+          const target = e.target;
+          const id = target.dataset['bannerId'];
+          const banner = target.closest('.alertBanner');
 
-        this.setBannerCookie(id);
-        this.dismissBanner(banner);
-      });
+          this.setBannerCookie(id);
+          this.dismissBanner(banner);
+        });
+      }
     }
   }
 }
