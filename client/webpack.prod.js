@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -9,7 +10,11 @@ module.exports = merge(common, {
   devtool: 'source-map',
   // see https://webpack.js.org/configuration/optimization/
   optimization: {
-    minimizer: [new OptimizeCSSAssetsPlugin({})]
+    minimizer: [new OptimizeCSSAssetsPlugin({}),
+    new TerserPlugin({
+      cache: true,
+      sourceMap: true,
+    })]
   },
   module: {
     rules: [
