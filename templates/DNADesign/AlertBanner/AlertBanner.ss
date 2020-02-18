@@ -1,18 +1,18 @@
 <% if $URLSegment != "Security" %>
 	<div class="alertBanner-list">
 		<% loop $AlertBanners %>
-			<div class="alertBanner active" <% if $BgColor %>style="background-color: $BgColor !important"<% end_if %>>
+			<div class="alertBanner active" <% if $BgColor %>style="background-color: #{$BgColor} !important"<% end_if %>>
 				<div class="alertBanner-container alertBanner-$ContentAlignment.LowerCase">
 					<% if $Icon %>
 							<div class="alertBanner-icon">
 								$Icon
 							</div>
 					<% end_if %>
-					<div class="alertBanner-content" <% if $FontColor %>style="color: $FontColor !important"<% end_if %>>
+					<div class="alertBanner-content" <% if $FontColor %>style="color: #{$FontColor} !important"<% end_if %>>
 						<% if $FontColor %>
 							<style>
 								.alertBanner-description > * {
-									color: $FontColor !important;
+									color: #{$FontColor} !important;
 								}
 							</style>
 						<% end_if %>
@@ -24,19 +24,19 @@
 								<% if $FontColor %>
 										<style>
 											.alertBanner-link {
-												color: $FontColor !important;
-												border-color: $FontColor !important;
+												color: #{$FontColor} !important;
+												border-color: #{$FontColor} !important;
 											}
 										</style>
 										<% if $BgColor %>
 											<style>
 												.alertBanner-link:hover {
-													color: $BgColor !important;
-													background-color: $FontColor !important;
+													color: #{$BgColor} !important;
+													background-color: #{$FontColor} !important;
 												}
 												.alertBanner-link:focus {
-													color: $BgColor !important;
-													background-color: $FontColor !important;
+													color: #{$BgColor} !important;
+													background-color: #{$FontColor} !important;
 												}
 											</style>
 										<% end_if %>
@@ -51,7 +51,7 @@
 					<% if $FontColor %>
 						<style>
 							.alertBanner-dismiss--button:before, .alertBanner-dismiss--button:after {
-								background-color: $FontColor !important;
+								background-color: #{$FontColor} !important;
 							}
 						</style>
 					<% end_if %>
