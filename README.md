@@ -20,7 +20,7 @@ E.g. `Page.ss`
 
 ```ss
 <body>
-  <% include AlertBanner %>
+  <% include DNADesign/AlertBanner/AlertBanner %>
   ...
 </body>
 ```
