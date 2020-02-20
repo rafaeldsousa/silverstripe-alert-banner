@@ -38,33 +38,20 @@ class AlertBanner {
     const dismisses = document.querySelectorAll('[data-dismiss-banner]');
 
     if (dismisses !== null) {
-<<<<<<< HEAD
-      for (const dismiss of dismisses) {
-        dismiss.addEventListener('click', e => {
-=======
       var self = this
 
-      dismisses.forEach(function(input) {
+      dismisses.forEach(function (input) {
         input.addEventListener('click', e => {
->>>>>>> 75bfe41bb0510588616d6d80ea8fc884793e2854
           e.preventDefault();
           const target = e.target;
           const id = target.dataset['bannerId'];
           const banner = target.closest('.alertBanner');
 
-<<<<<<< HEAD
-          this.setBannerCookie(id);
-          this.dismissBanner(banner);
-        });
-      }
-    }
-=======
           self.setBannerCookie(id);
           self.dismissBanner(banner);
         });
-      }
-    )}
->>>>>>> 75bfe41bb0510588616d6d80ea8fc884793e2854
+      })
+    }
   }
 }
 
