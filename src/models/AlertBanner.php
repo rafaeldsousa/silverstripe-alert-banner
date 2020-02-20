@@ -4,30 +4,37 @@ namespace DNADesign\AlertBanner;
 
 use gorriecoe\Link\Models\Link;
 use gorriecoe\LinkField\LinkField;
+use RyanPotter\SilverStripeColorField\Forms\ColorField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Assets\Image;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
-use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Security\PermissionProvider;
 
-
-class Alert extends DataObject implements PermissionProvider
+class AlertBanner extends DataObject implements PermissionProvider
 {
     private static $db = array(
         'Title' => 'Text',
         'Description' => 'HTMLText',
         'Global' => 'Boolean',
-        'Scheme' => 'Varchar(15)',
+        'BgColor' => 'Varchar(7)',
+        'FontColor' => 'Varchar(7)',
     );
 
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
-        'ButtonLink' => Link::class
+        'ButtonLink' => Link::class,
+        'Icon' => Image::class
+
+    ];
+
+    private static $owns = [
+        'Icon'
     ];
 
     private static $many_many = [
@@ -46,15 +53,6 @@ class Alert extends DataObject implements PermissionProvider
         'FormattedGlobal' => 'Show on all pages',
         'FormattedShowSinglePage' => 'Show on single page'
     ];
-
-    private $schemes = array(
-        'red' => 'Cross',
-        'green' => 'Tick',
-        'fact' => 'Fact',
-        'tip' => 'Tip',
-        'exclamation-mark' => 'Exclamation mark',
-        'question' => 'Question mark'
-    );
 
     private static $default_sort = 'ID DESC';
 
@@ -90,13 +88,12 @@ class Alert extends DataObject implements PermissionProvider
         $fields->removeByName('Description');
         $fields->removeByName('ButtonLinkID');
         $fields->removeByName('DisplayedPageID');
-        $fields->removeByName('AlertIconID');
-        $fields->removeByName('EmergencyIconID');
+        $fields->removeByName('IconID');
         $fields->removeByName('TitleLinkID');
 
         $fields->addFieldsToTab('Root.Main', array(
-            $title = TextField::create('Title'),
-            $description = HTMLEditorField::create('Description'),
+            $title = TextField::create('Title')->setDescription('Reference only.'),
+            $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
 
             $global = CheckboxField::create('Global', 'Show on all pages'),
 
@@ -116,7 +113,9 @@ class Alert extends DataObject implements PermissionProvider
         ));
 
         $fields->addFieldsToTab('Root.Style', array(
-            DropdownField::create('Scheme', 'Scheme', $this->schemes)
+            ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
+            ColorField::create('FontColor', 'Font Color')->setDescription('Default Color is white (#FFFFFF)'),
+            UploadField::create('Icon', 'Icon')
         ));
 
         $displayedPage->hideIf('Global')->isChecked()->end();
@@ -127,7 +126,7 @@ class Alert extends DataObject implements PermissionProvider
 
     public function getDisplayed()
     {
-        if ($isPublished = Versioned::get_by_stage(Alert::class, 'Live')->byID($this->ID)) {
+        if ($isPublished = Versioned::get_by_stage(AlertBanner::class, 'Live')->byID($this->ID)) {
             return 1;
         }
         return 0;

@@ -5,10 +5,10 @@ namespace DNADesign\AlertBanner;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Forms\GridField\GridField;
 
-class AlertAdmin extends ModelAdmin
+class AlertBannerAdmin extends ModelAdmin
 {
   private static $managed_models = [
-    Alert::class
+    AlertBanner::class
   ];
 
   private static $url_segment = 'alerts';

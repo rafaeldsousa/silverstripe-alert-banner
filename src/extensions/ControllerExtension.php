@@ -3,15 +3,15 @@
 namespace DNADesign\AlertBanner;
 
 use SilverStripe\Control\Director;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\View\Requirements;
+use SilverStripe\Core\Extension;
 
 /**
  * This extension adds the ability to control the max-age per originator.
  * The configuration option is surfaced to the CMS UI. The extension needs to be added
  * to the object related to the policed controller.
  */
-class PageControllerExtension extends DataExtension
+class ControllerExtension extends Extension
 {
 
   private static $allowed_actions = array(
@@ -46,16 +46,16 @@ class PageControllerExtension extends DataExtension
   {
     $session = $this->getSession();
 
-    $alerts = $session->get('Alerts');
+    $alerts = $session->get('AlertBanners');
 
     $sessionData = $alerts ?: [];
     array_push($sessionData, $data->postVar('id'));
-    $session->set('Alerts', $sessionData);
+    $session->set('AlertBanners', $sessionData);
   }
 
-  public function getAlerts()
+  public function getAlertBanners()
   {
-    $alerts = Alert::get()->filterByCallback(function ($alert) {
+    $alerts = AlertBanner::get()->filterByCallback(function ($alert) {
       return $this->alertCanShow($alert);
     })->sort(array(
       // Prioritise Global and Emergency Alerts
@@ -68,7 +68,7 @@ class PageControllerExtension extends DataExtension
   public function alertCanShow($alert)
   {
     $session = $this->getSession();
-    $alerts = $session->get('Alerts');
+    $alerts = $session->get('AlertBanners');
     $show = true;
 
     if ($alert->Global == 1) {
