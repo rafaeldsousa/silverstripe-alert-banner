@@ -53,7 +53,7 @@ Styleguide 6.2.5
 			text-align: center;
     }
 
-    &:hover {
+    &:hover, &:focus {
       color: #0077af;
       background-color: #FFF;
     }
@@ -77,7 +77,7 @@ Styleguide 6.2.5
       cursor: pointer;
       transition: opacity .3s ease;
 
-      &:hover {
+      &:hover, &:focus {
         opacity: 1;
       }
       &:before, &:after {
@@ -109,6 +109,10 @@ Styleguide 6.2.5
     max-height: 275px;
     overflow: hidden;
     margin-bottom: 20px;
+
+    & > * {
+      color: #FFF;
+    }
 }
 
 
@@ -171,6 +175,10 @@ Styleguide 6.2.5
 
 .alertBanner-content {
   color: #fff;
+
+  .alertBanner-title {
+    color: #fff;
+  }
 }
 
 

@@ -11,7 +11,7 @@ In your extensions yml file include
 #SS4
 PageController:
   extensions:
-    - DNADesign\AlertBanner\PageControllerExtension
+    - DNADesign\AlertBanner\ControllerExtension
 ```
 
 Include the alert banner template where you'd like it to be displayed.
@@ -20,7 +20,7 @@ E.g. `Page.ss`
 
 ```ss
 <body>
-  <% include AlertBanner %>
+  <% include DNADesign/AlertBanner/AlertBanner %>
   ...
 </body>
 ```
