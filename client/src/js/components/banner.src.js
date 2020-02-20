@@ -1,3 +1,7 @@
+import 'promise-polyfill/src/polyfill';
+import elementClosest from 'element-closest';
+elementClosest(window);
+
 class AlertBanner {
   constructor() {
 
