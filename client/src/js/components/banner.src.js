@@ -37,17 +37,21 @@ class AlertBanner {
 
     const dismiss = document.querySelector('[data-dismiss-banner]');
 
-    if (dismiss !== null) {
-      dismiss.addEventListener('click', e => {
-        e.preventDefault();
-        const target = e.target;
-        const id = target.dataset['bannerId'];
-        const banner = target.closest('.alertBanner');
+    if (dismisses !== null) {
+      var self = this
 
-        this.setBannerCookie(id);
-        this.dismissBanner(banner);
-      });
-    }
+      dismisses.forEach(function(input) {
+        input.addEventListener('click', e => {
+          e.preventDefault();
+          const target = e.target;
+          const id = target.dataset['bannerId'];
+          const banner = target.closest('.alertBanner');
+
+          self.setBannerCookie(id);
+          self.dismissBanner(banner);
+        });
+      }
+    )}
   }
 }
 
