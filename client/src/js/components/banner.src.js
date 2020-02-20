@@ -35,19 +35,21 @@ class AlertBanner {
       NodeList.prototype.forEach = Array.prototype.forEach;
     }
 
-    const dismiss = document.querySelector('[data-dismiss-banner]');
+    if (dismisses !== null) {
+      var self = this
 
-    if (dismiss !== null) {
-      dismiss.addEventListener('click', e => {
-        e.preventDefault();
-        const target = e.target;
-        const id = target.dataset['bannerId'];
-        const banner = target.closest('.alertBanner');
+      dismisses.forEach(function(input) {
+        input.addEventListener('click', e => {
+          e.preventDefault();
+          const target = e.target;
+          const id = target.dataset['bannerId'];
+          const banner = target.closest('.alertBanner');
 
-        this.setBannerCookie(id);
-        this.dismissBanner(banner);
-      });
-    }
+          self.setBannerCookie(id);
+          self.dismissBanner(banner);
+        });
+      }
+    )}
   }
 }
 
