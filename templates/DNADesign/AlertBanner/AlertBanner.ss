@@ -42,7 +42,7 @@
 										<% end_if %>
 									<% end_if %>
 								<% with $ButtonLink %>
-									<a href="$getLinkURL" class="alertBanner-link">$Title</a>
+									<a href="$LinkURL" class="alertBanner-link">$Title</a>
 								<% end_with %>
 							<% end_if %>
 						</div>
