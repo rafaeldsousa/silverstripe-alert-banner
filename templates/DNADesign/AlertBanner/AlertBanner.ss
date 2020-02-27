@@ -11,7 +11,7 @@
 					<div class="alertBanner-content" <% if $FontColor %>style="color: $FontColor !important"<% end_if %>>
 						<% if $FontColor %>
 							<style>
-								.alertBanner-description > * {
+								#{$ID}.alertBanner-description > * {
 									color: $FontColor !important;
 								}
 							</style>
@@ -23,18 +23,18 @@
 							<% if $ButtonLink %>
 								<% if $FontColor %>
 										<style>
-											.alertBanner-link {
+											#{$ID}.alertBanner-link {
 												color: $FontColor !important;
 												border-color: $FontColor !important;
 											}
 										</style>
 										<% if $BgColor %>
 											<style>
-												.alertBanner-link:hover {
+												#{$ID}.alertBanner-link:hover {
 													color: $BgColor !important;
 													background-color: $FontColor !important;
 												}
-												.alertBanner-link:focus {
+												#{$ID}.alertBanner-link:focus {
 													color: $BgColor !important;
 													background-color: $FontColor !important;
 												}
@@ -50,7 +50,7 @@
 					<div class="alertBanner-dismiss">
 					<% if $FontColor %>
 						<style>
-							.alertBanner-dismiss--button:before, .alertBanner-dismiss--button:after {
+							#{$ID}.alertBanner-dismiss--button:before, .alertBanner-dismiss--button:after {
 								background-color: $FontColor !important;
 							}
 						</style>
