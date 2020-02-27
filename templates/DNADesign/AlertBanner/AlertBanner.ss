@@ -1,7 +1,7 @@
 <% if $URLSegment != "Security" %>
 	<div class="alertBanner-list">
 		<% loop $AlertBanners %>
-			<div class="alertBanner active" id="#ID" <% if $BgColor %>style="background-color: #{$BgColor} !important"<% end_if %>>
+			<div class="alertBanner active" id="$ID" <% if $BgColor %>style="background-color: #{$BgColor} !important"<% end_if %>>
 				<div class="alertBanner-container alertBanner-$ContentAlignment.LowerCase">
 					<% if $Icon %>
 							<div class="alertBanner-icon">
