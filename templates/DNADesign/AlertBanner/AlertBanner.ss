@@ -1,7 +1,7 @@
 <% if $URLSegment != "Security" %>
 	<div class="alertBanner-list">
 		<% loop $AlertBanners %>
-			<div class="alertBanner active" id="$ID" <% if $BgColor %>style="background-color: #{$BgColor} !important"<% end_if %>>
+			<div class="alertBanner alertBanner--$ID active" <% if $BgColor %>style="background-color: #{$BgColor} !important"<% end_if %>>
 				<div class="alertBanner-container alertBanner-$ContentAlignment.LowerCase">
 					<% if $Icon %>
 							<div class="alertBanner-icon">
@@ -11,7 +11,7 @@
 					<div class="alertBanner-content" <% if $FontColor %>style="color: #{$FontColor} !important"<% end_if %>>
 						<% if $FontColor %>
 							<style>
-								#{$ID}.alertBanner-description > * {
+								.alertBanner--$ID .alertBanner-description > * {
 									color: #{$FontColor} !important;
 								}
 							</style>
@@ -23,18 +23,18 @@
 							<% if $ButtonLink %>
 								<% if $FontColor %>
 										<style>
-											#{$ID}.alertBanner-link {
+											.alertBanner--$ID .alertBanner-link {
 												color: #{$FontColor} !important;
 												border-color: #{$FontColor} !important;
 											}
 										</style>
 										<% if $BgColor %>
 											<style>
-												#{$ID}.alertBanner-link:hover {
+												.alertBanner--$ID .alertBanner-link:hover {
 													color: #{$BgColor} !important;
 													background-color: #{$FontColor} !important;
 												}
-												#{$ID}.alertBanner-link:focus {
+												alertBanner--$ID .alertBanner-link:focus {
 													color: #{$BgColor} !important;
 													background-color: #{$FontColor} !important;
 												}
@@ -50,7 +50,7 @@
 					<div class="alertBanner-dismiss">
 					<% if $FontColor %>
 						<style>
-							#{$ID}.alertBanner-dismiss--button:before, .alertBanner-dismiss--button:after {
+							.alertBanner--$ID .alertBanner-dismiss--button:before, .alertBanner--$ID .alertBanner-dismiss--button:after {
 								background-color: #{$FontColor} !important;
 							}
 						</style>
