@@ -22,6 +22,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         'Title' => 'Text',
         'Description' => 'HTMLText',
         'Global' => 'Boolean',
+        'DisableDismiss' => 'Boolean',
         'BgColor' => 'Varchar(7)',
         'FontColor' => 'Varchar(7)',
     );
@@ -88,6 +89,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->removeByName('Description');
         $fields->removeByName('ButtonLinkID');
         $fields->removeByName('DisplayedPageID');
+        $fields->removeByName('DisableDismiss');
         $fields->removeByName('IconID');
         $fields->removeByName('TitleLinkID');
 
@@ -111,6 +113,8 @@ class AlertBanner extends DataObject implements PermissionProvider
                 $this
             )->setSortColumn('Sort'))
         ));
+
+        $fields->addFieldToTab('Root.Main', CheckboxField::create('DisableDismiss', 'Hide dismiss button')->setDescription('Hiding the dismiss button removes the users ability to dismiss the alert banner'), 'Description');
 
         $fields->addFieldsToTab('Root.Style', array(
             ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
