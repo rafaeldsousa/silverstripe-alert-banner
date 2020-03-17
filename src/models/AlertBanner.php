@@ -8,6 +8,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         'Global' => 'Boolean',
         'BgColor' => 'Color',
         'FontColor' => 'Color',
+        'DisableDismiss' => 'Boolean',
         'ContentAlignment' => 'Enum("Top,Center,Bottom","Center")'
     );
 
@@ -83,6 +84,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->removeByName('ButtonLinkID');
         $fields->removeByName('DisplayedPageID');
         $fields->removeByName('IconID');
+        $fields->removeByName('DisableDismiss');
         $fields->removeByName('TitleLinkID');
 
         $ExceptionsGrid = GridFieldConfig_RecordEditor::create();
@@ -103,6 +105,8 @@ class AlertBanner extends DataObject implements PermissionProvider
 
             $exceptions = DisplayLogicWrapper::create(GridField::create('Exceptions', 'Exceptions', $this->Exceptions(), $ExceptionsGrid))
         ));
+
+        $fields->addFieldToTab('Root.Main', CheckboxField::create('DisableDismiss', 'Hide dismiss button')->setDescription('Hiding the dismiss button removes the users ability to dismiss the alert banner'), 'Description');
 
         $aligmentOptions = $this->dbObject('ContentAlignment');
         if ($aligmentOptions) {
