@@ -2,19 +2,19 @@
 
 namespace DNADesign\AlertBanner;
 
+use SilverStripe\Assets\File;
 use gorriecoe\Link\Models\Link;
-use gorriecoe\LinkField\LinkField;
-use RyanPotter\SilverStripeColorField\Forms\ColorField;
-use SilverStripe\AssetAdmin\Forms\UploadField;
-use SilverStripe\Assets\Image;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextField;
+use gorriecoe\LinkField\LinkField;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\Permission;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Forms\TextField;
 use SilverStripe\Security\PermissionProvider;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use RyanPotter\SilverStripeColorField\Forms\ColorField;
 
 class AlertBanner extends DataObject implements PermissionProvider
 {
@@ -29,7 +29,7 @@ class AlertBanner extends DataObject implements PermissionProvider
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
         'ButtonLink' => Link::class,
-        'Icon' => Image::class
+        'Icon' => File::class
 
     ];
 
