@@ -29,7 +29,7 @@ class AlertBanner extends DataObject implements PermissionProvider
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
         'ButtonLink' => Link::class,
-        'Icon' => File::class
+        'Icon' => Image::class
 
     ];
 
