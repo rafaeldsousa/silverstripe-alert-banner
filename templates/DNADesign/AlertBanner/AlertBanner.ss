@@ -4,9 +4,9 @@
 	<div class="alertBanner alertBanner--$ID active" <% if $BgColor %>style="background-color: {$BgColor} !important"
 		<% end_if %>>
 		<div class="alertBanner-container alertBanner-$ContentAlignment.LowerCase">
-			<% if $Icon %>
+			<% if $AlertIcon %>
 			<div class="alertBanner-icon">
-				$Icon
+				$AlertIcon
 			</div>
 			<% end_if %>
 			<div class="alertBanner-content" <% if $FontColor %>style="color: {$FontColor} !important" <% end_if %>>
