@@ -2,7 +2,7 @@
 
 namespace DNADesign\AlertBanner;
 
-use SilverStripe\Assets\File;
+use SilverStripe\Assets\Image;
 use gorriecoe\Link\Models\Link;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\TextField;
