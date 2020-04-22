@@ -15,6 +15,9 @@ use SilverStripe\Security\PermissionProvider;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use RyanPotter\SilverStripeColorField\Forms\ColorField;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\ORM\FieldType\DBField;
 
 class AlertBanner extends DataObject implements PermissionProvider
 {
@@ -51,33 +54,23 @@ class AlertBanner extends DataObject implements PermissionProvider
     private static $summary_fields = [
         'Title' => 'Title',
         'FormattedDisplay' => 'Alert shown',
-        'FormattedGlobal' => 'Show on all pages',
+        'Global.Nice' => 'Show on all pages',
         'FormattedShowSinglePage' => 'Show on single page'
     ];
 
     private static $default_sort = 'ID DESC';
 
-    public function FormattedGlobal()
-    {
-        return $this->Global ? true : false;
-    }
-
-    public function FormattedEmergency()
-    {
-        return $this->Emergency ? true : false;
-    }
-
     public function FormattedDisplay()
     {
-        return $this->getDisplayed() ? true : false;
+        return DBField::create_field('Boolean', $this->getDisplayed());
     }
 
     public function FormattedShowSinglePage()
     {
         if ($this->Global) {
-            return true;
+            return DBField::create_field('Boolean', 1);
         } else {
-            return $this->ShowSinglePage ? true : false;
+            return DBField::create_field('Boolean', $this->ShowSinglePage ? 1 : 0);
         }
     }
 
@@ -93,26 +86,39 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->removeByName('AlertIconID');
         $fields->removeByName('TitleLinkID');
 
-        $fields->addFieldsToTab('Root.Main', array(
-            $title = TextField::create('Title')->setDescription('Reference only.'),
-            $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
+        // SS 4.5 workaround
+        if ($this->isInDB()) {
+            $fields->addFieldsToTab('Root.Main', array(
+                $title = TextField::create('Title')->setDescription('Reference only.'),
+                $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
 
-            $global = CheckboxField::create('Global', 'Show on all pages'),
+                $global = CheckboxField::create('Global', 'Show on all pages'),
 
-            $buttonlink = Wrapper::create(
-                LinkField::create('ButtonLink', 'Button link', $this)
-            ),
+                $buttonlink = Wrapper::create(
+                    LinkField::create('ButtonLink', 'Button link', $this)
+                ),
 
-            $displayedPage = Wrapper::create(
-                LinkField::create('DisplayedPage', 'Alert Page', $this)
-            ),
+                $displayedPage = Wrapper::create(
+                    TreeDropdownField::create('DisplayedPageID', 'Alert Page', SiteTree::class)
+                ),
 
-            $exceptions = Wrapper::create(LinkField::create(
-                'Exceptions',
-                'Exceptions',
-                $this
-            )->setSortColumn('Sort'))
-        ));
+                $exceptions = Wrapper::create(LinkField::create(
+                    'Exceptions',
+                    'Exceptions',
+                    $this
+                )->setSortColumn('Sort'))
+            ));
+
+            $displayedPage->hideIf('Global')->isChecked()->end();
+            $exceptions->hideUnless('Global')->isChecked()->end();
+        } else {
+            $fields->addFieldsToTab('Root.Main', array(
+                $title = TextField::create('Title')->setDescription('Reference only.'),
+                $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
+
+                $global = CheckboxField::create('Global', 'Show on all pages')
+            ));
+        }
 
         $fields->addFieldToTab('Root.Main', CheckboxField::create('DisableDismiss', 'Hide dismiss button')->setDescription('Hiding the dismiss button removes the users ability to dismiss the alert banner'), 'Description');
 
@@ -121,9 +127,6 @@ class AlertBanner extends DataObject implements PermissionProvider
             ColorField::create('FontColor', 'Font Color')->setDescription('Default Color is white (#FFFFFF)'),
             UploadField::create('AlertIcon', 'Icon')
         ));
-
-        $displayedPage->hideIf('Global')->isChecked()->end();
-        $exceptions->hideUnless('Global')->isChecked()->end();
 
         return $fields;
     }
