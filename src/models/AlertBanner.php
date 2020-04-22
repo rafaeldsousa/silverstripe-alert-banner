@@ -2,19 +2,19 @@
 
 namespace DNADesign\AlertBanner;
 
-use gorriecoe\Link\Models\Link;
-use gorriecoe\LinkField\LinkField;
-use RyanPotter\SilverStripeColorField\Forms\ColorField;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use gorriecoe\Link\Models\Link;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextField;
+use gorriecoe\LinkField\LinkField;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\Permission;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Forms\TextField;
 use SilverStripe\Security\PermissionProvider;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use RyanPotter\SilverStripeColorField\Forms\ColorField;
 
 class AlertBanner extends DataObject implements PermissionProvider
 {
@@ -30,12 +30,12 @@ class AlertBanner extends DataObject implements PermissionProvider
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
         'ButtonLink' => Link::class,
-        'Icon' => Image::class
+        'AlertIcon' => Image::class
 
     ];
 
     private static $owns = [
-        'Icon'
+        'AlertIcon'
     ];
 
     private static $many_many = [
@@ -90,7 +90,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->removeByName('ButtonLinkID');
         $fields->removeByName('DisplayedPageID');
         $fields->removeByName('DisableDismiss');
-        $fields->removeByName('IconID');
+        $fields->removeByName('AlertIconID');
         $fields->removeByName('TitleLinkID');
 
         $fields->addFieldsToTab('Root.Main', array(
@@ -119,7 +119,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->addFieldsToTab('Root.Style', array(
             ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
             ColorField::create('FontColor', 'Font Color')->setDescription('Default Color is white (#FFFFFF)'),
-            UploadField::create('Icon', 'Icon')
+            UploadField::create('AlertIcon', 'Icon')
         ));
 
         $displayedPage->hideIf('Global')->isChecked()->end();
