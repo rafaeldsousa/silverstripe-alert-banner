@@ -87,7 +87,7 @@ class ControllerExtension extends Extension
         return false;
       }
 
-      if ($this->owner->ID !== $displayedPage->getLinkedPageID()) {
+      if ($this->owner->ID !== $alert->DisplayedPageID) {
         return false;
       }
     }

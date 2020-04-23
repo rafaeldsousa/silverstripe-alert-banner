@@ -53,7 +53,7 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     private static $summary_fields = [
         'Title' => 'Title',
-        'FormattedDisplay' => 'Alert shown',
+        'FormattedDisplay' => 'Alert Enabled',
         'Global.Nice' => 'Show on all pages',
         'FormattedShowSinglePage' => 'Show on single page'
     ];
@@ -68,9 +68,9 @@ class AlertBanner extends DataObject implements PermissionProvider
     public function FormattedShowSinglePage()
     {
         if ($this->Global) {
-            return DBField::create_field('Boolean', 1);
+            return DBField::create_field('Boolean', 0);
         } else {
-            return DBField::create_field('Boolean', $this->ShowSinglePage ? 1 : 0);
+            return DBField::create_field('Boolean', $this->DisplayedPageID ? 1 : 0);
         }
     }
 
