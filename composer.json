@@ -4,7 +4,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "gorriecoe/silverstripe-linkfield": "^1.0",
-        "gorriecoe/silverstripe-link": "^1.2",
+        "gorriecoe/silverstripe-link": "^1.3",
         "unclecheese/display-logic": "^2.0.2",
         "ryanpotter/silverstripe-color-field": "^1.0"
     },

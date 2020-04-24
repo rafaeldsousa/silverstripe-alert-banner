@@ -2,5 +2,10 @@
 name: silverstripe-alert-banner
 ---
 
-DNADesign\AlertBanner\PageControllerExtension:
-  live_reload_port: 35777
+PageController:
+  extensions:
+    - DNADesign\AlertBanner\ControllerExtension
+
+SilverStripe\Control\Director:
+  rules:
+    'alerts': 'DNADesign\AlertBanner\AlertBannerController'

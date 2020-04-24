@@ -30,6 +30,8 @@ class AlertBanner extends DataObject implements PermissionProvider
         'FontColor' => 'Varchar(7)',
     );
 
+    private static $controller = AlertBannerController::class;
+
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
         'ButtonLink' => Link::class,

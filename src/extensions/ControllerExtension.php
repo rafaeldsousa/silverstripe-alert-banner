@@ -2,7 +2,6 @@
 
 namespace DNADesign\AlertBanner;
 
-use SilverStripe\Control\Director;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Extension;
 
@@ -13,91 +12,57 @@ use SilverStripe\Core\Extension;
  */
 class ControllerExtension extends Extension
 {
-
-  private static $allowed_actions = array(
-    'setBannerApplies'
-  );
-
-  public function onAfterInit()
-  {
-    if ($this->isModuleLiveReload()) {
-      Requirements::javascript(sprintf('http://localhost:%s/livereload.js', $this->owner->config()->live_reload_port));
-    } else {
-      Requirements::css('dnadesign/silverstripe-alert-banner: client/dist/main.css');
+    public function onAfterInit()
+    {
+        Requirements::css('dnadesign/silverstripe-alert-banner: client/dist/main.css');
+        Requirements::javascript('dnadesign/silverstripe-alert-banner: client/dist/main.js');
     }
 
-    Requirements::javascript('dnadesign/silverstripe-alert-banner: client/dist/main.js');
-  }
+    public function getAlertBanners()
+    {
+        $alerts = AlertBanner::get()->filterByCallback(function ($alert) {
+            return $this->alertCanShow($alert);
+        })->sort(array(
+            // Prioritise Global and Emergency Alerts
+            'Global' => 'DESC',
+            'Emergency' => 'DESC'
+        ));
+        return $alerts;
+    }
 
-  public function isModuleLiveReload()
-  {
-    $isDev = Director::isDev();
-    $fSockOpen = @fsockopen('localhost', $this->owner->config()->live_reload_port, $errno, $errstr, 1);
+    public function alertCanShow($alert)
+    {
+        $session = $this->owner->getRequest()->getSession();
+        $alerts = $session->get('AlertBanners');
+        $show = true;
 
-    return $isDev && $fSockOpen;
-  }
+        if ($alert->Global == 1) {
+            $exceptions = array_map(function ($exception) {
+                return $exception->getLinkedPageID();
+            }, $alert->Exceptions()->toArray());
 
-  public function getSession()
-  {
-    return $this->owner->getRequest()->getSession();
-  }
+            if (!empty($exceptions)) {
+                if (in_array($this->owner->ID, $exceptions)) {
+                    return false;
+                }
+            }
+        } else {
+            $displayedPage = $alert->DisplayedPage;
+            if (empty($displayedPage)) {
+                return false;
+            }
 
-  public function setBannerApplies($data)
-  {
-    $session = $this->getSession();
-
-    $alerts = $session->get('AlertBanners');
-
-    $sessionData = $alerts ?: [];
-    array_push($sessionData, $data->postVar('id'));
-    $session->set('AlertBanners', $sessionData);
-  }
-
-  public function getAlertBanners()
-  {
-    $alerts = AlertBanner::get()->filterByCallback(function ($alert) {
-      return $this->alertCanShow($alert);
-    })->sort(array(
-      // Prioritise Global and Emergency Alerts
-      'Global' => 'DESC',
-      'Emergency' => 'DESC'
-    ));
-    return $alerts;
-  }
-
-  public function alertCanShow($alert)
-  {
-    $session = $this->getSession();
-    $alerts = $session->get('AlertBanners');
-    $show = true;
-
-    if ($alert->Global == 1) {
-      $exceptions = array_map(function ($exception) {
-        return $exception->getLinkedPageID();
-      }, $alert->Exceptions()->toArray());
-
-      if (!empty($exceptions)) {
-        if (in_array($this->owner->ID, $exceptions)) {
-          return false;
+            if ($this->owner->ID !== $alert->DisplayedPageID) {
+                return false;
+            }
         }
-      }
-    } else {
-      $displayedPage = $alert->DisplayedPage;
-      if (empty($displayedPage)) {
-        return false;
-      }
 
-      if ($this->owner->ID !== $alert->DisplayedPageID) {
-        return false;
-      }
+        if (empty($alerts)) {
+            $show = true;
+        } else {
+            $show = !in_array($alert->ID, $alerts);
+        }
+
+        return $show;
     }
-
-    if (empty($alerts)) {
-      $show = true;
-    } else {
-      $show = !in_array($alert->ID, $alerts);
-    }
-
-    return $show;
-  }
 }

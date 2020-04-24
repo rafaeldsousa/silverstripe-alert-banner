@@ -5,15 +5,6 @@ Adds Alerts Modal Admin to your site where you can add multiple alerts, either g
 
 ## Enabling Alert Banner
 
-In your extensions yml file include
-
-```yml
-#SS4
-PageController:
-  extensions:
-    - DNADesign\AlertBanner\ControllerExtension
-```
-
 Include the alert banner template where you'd like it to be displayed.
 
 E.g. `Page.ss`
