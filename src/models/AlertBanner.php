@@ -2,22 +2,22 @@
 
 namespace DNADesign\AlertBanner;
 
-use SilverStripe\Assets\Image;
-use gorriecoe\Link\Models\Link;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\TextField;
 use gorriecoe\LinkField\LinkField;
+use gorriecoe\Link\Models\Link;
+use RyanPotter\SilverStripeColorField\Forms\ColorField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Assets\Image;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\Security\Permission;
+use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
-use SilverStripe\Security\PermissionProvider;
-use SilverStripe\AssetAdmin\Forms\UploadField;
-use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
-use RyanPotter\SilverStripeColorField\Forms\ColorField;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Forms\TreeDropdownField;
-use SilverStripe\ORM\FieldType\DBField;
 
 class AlertBanner extends DataObject implements PermissionProvider
 {
@@ -35,29 +35,33 @@ class AlertBanner extends DataObject implements PermissionProvider
     private static $has_one = [
         'DisplayedPage' => SiteTreeLink::class,
         'ButtonLink' => Link::class,
-        'AlertIcon' => Image::class
+        'AlertIcon' => Image::class,
 
     ];
 
     private static $owns = [
-        'AlertIcon'
+        'AlertIcon',
     ];
 
     private static $many_many = [
-        'Exceptions' => SiteTreeLink::class
+        'Exceptions' => SiteTreeLink::class,
     ];
 
     private static $many_many_extraFields = [
         'Exceptions' => [
-            'Sort' => 'Int' // Required for all many_many relationships
-        ]
+            'Sort' => 'Int', // Required for all many_many relationships
+        ],
     ];
 
     private static $summary_fields = [
         'Title' => 'Title',
         'FormattedDisplay' => 'Alert Enabled',
         'Global.Nice' => 'Show on all pages',
-        'FormattedShowSinglePage' => 'Show on single page'
+        'FormattedShowSinglePage' => 'Show on single page',
+    ];
+
+    private static $searchable_fields = [
+        'Title',
     ];
 
     private static $default_sort = 'ID DESC';
@@ -108,7 +112,7 @@ class AlertBanner extends DataObject implements PermissionProvider
                     'Exceptions',
                     'Exceptions',
                     $this
-                )->setSortColumn('Sort'))
+                )->setSortColumn('Sort')),
             ));
 
             $displayedPage->hideIf('Global')->isChecked()->end();
@@ -118,7 +122,7 @@ class AlertBanner extends DataObject implements PermissionProvider
                 $title = TextField::create('Title')->setDescription('Reference only.'),
                 $description = HTMLEditorField::create('Description', 'Content')->setDescription('Use this field to define your alert banner content.'),
 
-                $global = CheckboxField::create('Global', 'Show on all pages')
+                $global = CheckboxField::create('Global', 'Show on all pages'),
             ));
         }
 
@@ -127,7 +131,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         $fields->addFieldsToTab('Root.Style', array(
             ColorField::create('BgColor', 'Background Color')->setDescription('Default Color is blue (#0077af)'),
             ColorField::create('FontColor', 'Font Color')->setDescription('Default Color is white (#FFFFFF)'),
-            UploadField::create('AlertIcon', 'Icon')
+            UploadField::create('AlertIcon', 'Icon'),
         ));
 
         return $fields;
@@ -147,7 +151,7 @@ class AlertBanner extends DataObject implements PermissionProvider
             'ALERT_EDIT' => array(
                 'name' => 'Create/edit/publish Alerts',
                 'category' => 'Alerts',
-            )
+            ),
         );
     }
 
