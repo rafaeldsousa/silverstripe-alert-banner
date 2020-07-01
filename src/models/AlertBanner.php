@@ -57,7 +57,7 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     private static $summary_fields = [
         'Title' => 'Title',
-        'FormattedDisplay' => 'Alert Enabled',
+        'FormattedDisplay' => 'Alert displayed',
         'Global.Nice' => 'Show on all pages',
         'FormattedShowSinglePage' => 'Show on single page',
     ];
@@ -141,7 +141,7 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     public function getDisplayed()
     {
-        if ($this->Global || $this->DisplayedPage) {
+        if ($this->Global || $this->DisplayedPageID) {
             if ($isPublished = Versioned::get_by_stage(AlertBanner::class, 'Live')->byID($this->ID)) {
                 return 1;
             }
