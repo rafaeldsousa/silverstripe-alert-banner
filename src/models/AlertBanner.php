@@ -30,6 +30,8 @@ class AlertBanner extends DataObject implements PermissionProvider
         'FontColor' => 'Varchar(7)',
     );
 
+    private static $table_name = "SiteAlertBanner";
+
     private static $controller = AlertBannerController::class;
 
     private static $has_one = [
@@ -139,9 +141,12 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     public function getDisplayed()
     {
-        if ($isPublished = Versioned::get_by_stage(AlertBanner::class, 'Live')->byID($this->ID)) {
-            return 1;
+        if ($this->Global || $this->DisplayedPage) {
+            if ($isPublished = Versioned::get_by_stage(AlertBanner::class, 'Live')->byID($this->ID)) {
+                return 1;
+            }
         }
+
         return 0;
     }
 
