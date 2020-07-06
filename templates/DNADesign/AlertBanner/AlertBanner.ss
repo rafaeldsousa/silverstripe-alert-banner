@@ -6,7 +6,7 @@
 		<div class="alertBanner-container alertBanner-$ContentAlignment.LowerCase">
 			<% if $AlertIcon %>
 			<div class="alertBanner-icon">
-				$AlertIcon
+				$SVG($Top.getFileName($AlertIcon.ID)).customBasePath($Top.getFileDir($AlertIcon.ID))
 			</div>
 			<% end_if %>
 			<div class="alertBanner-content" <% if $FontColor %>style="color: {$FontColor} !important" <% end_if %>>
