@@ -5,6 +5,7 @@ namespace DNADesign\AlertBanner;
 use SilverStripe\Assets\File;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Extension;
+use Silverstripe\Control\NullHTTPRequest;
 
 /**
  * This extension adds the ability to control the max-age per originator.
@@ -33,7 +34,13 @@ class ControllerExtension extends Extension
 
     public function alertCanShow($alert)
     {
-        $session = $this->owner->getRequest()->getSession();
+        $request = $this->owner->getRequest();
+
+        if ($request instanceof NullHTTPRequest) {
+            return false;
+        }
+
+        $session = $request->getSession();
         $alerts = $session->get('AlertBanners');
         $show = true;
 
