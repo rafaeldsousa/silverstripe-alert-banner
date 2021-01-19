@@ -20,7 +20,17 @@ The above should display the alert banner as the very top of your site. (As long
 
 ## Styling Alert Banner
 
-In your Alert Banner element, click on the style tab and choose the background color, font color and Icon that the banner should use.
+You can define your own styles in yml.
+
+```yml
+DNADesign\AlertBanner\AlertBanner:
+  Themes:
+    Default:
+      Title: 'Default Theme'
+      FontColor: '#000000'
+      BGColor: '#FFFFFF'
+      Icon: 'cross-red'
+```
 
 ## CMS
 
