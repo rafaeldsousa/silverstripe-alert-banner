@@ -3,8 +3,10 @@
 namespace DNADesign\AlertBanner;
 
 use SilverStripe\Assets\File;
-use SilverStripe\View\Requirements;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\Core\Extension;
+use SilverStripe\View\Requirements;
+use Silverstripe\Control\NullHTTPRequest;
 
 /**
  * This extension adds the ability to control the max-age per originator.
@@ -31,21 +33,71 @@ class ControllerExtension extends Extension
         return $alerts;
     }
 
+    public function getAllowedPageIDs($alert)
+    {
+        $result = [];
+
+        foreach ($alert->MustShowPages() as $page) {
+            array_push($result, $page->getLinkedPageID());
+        }
+
+        return $result;
+    }
+
+    public function getExcludedPageIDs($alert)
+    {
+        $result = [];
+
+        foreach ($alert->Exceptions() as $page) {
+            array_push($result, $page->getLinkedPageID());
+        }
+
+        return $result;
+    }
+
+    public function getParentIDs() {
+        $result = [$this->owner->ID];
+
+        foreach ($this->owner->getAncestors() as $page) {
+            array_push($result, $page->ID);
+        }
+
+        return $result;
+    }
+
     public function alertCanShow($alert)
     {
-        $session = $this->owner->getRequest()->getSession();
+        $request = $this->owner->getRequest();
+
+        if ($request instanceof NullHTTPRequest) {
+            return false;
+        }
+
+        $session = $request->getSession();
         $alerts = $session->get('AlertBanners');
         $show = true;
 
         if ($alert->Global == 1) {
-            $exceptions = array_map(function ($exception) {
-                return $exception->getLinkedPageID();
-            }, $alert->Exceptions()->toArray());
+            if (!$alert->Exceptions()) {
+                return true;
+            }
 
-            if (!empty($exceptions)) {
-                if (in_array($this->owner->ID, $exceptions)) {
-                    return false;
-                }
+            $exceptionIDs = $this->getExcludedPageIDs($alert);
+            $allowedPages = $this->getAllowedPageIDs($alert);
+            $parentIDs = $this->getParentIDs();
+
+            /**
+             * Check to see if this page is in the must show pages list
+             */
+            if (array_intersect($allowedPages, [$this->owner->ID])) {
+                return true;
+            }
+
+            /**
+             * Checks to see if this page, or its parents are in the exception list
+             */
+            if (array_intersect($exceptionIDs, $parentIDs)) {
+                return false;
             }
         } else {
             $displayedPage = $alert->DisplayedPage;
