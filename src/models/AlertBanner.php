@@ -18,7 +18,6 @@ use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\Forms\TreeDropdownField;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\Security\PermissionProvider;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class AlertBanner extends DataObject implements PermissionProvider
@@ -28,7 +27,7 @@ class AlertBanner extends DataObject implements PermissionProvider
         'Description' => 'HTMLText',
         'Global' => 'Boolean',
         'DisableDismiss' => 'Boolean',
-        'Theme' => 'Varchar(256)'
+        'CurrentTheme' => 'Varchar(256)'
     ];
 
     private static $table_name = "SiteAlertBanner";
@@ -197,44 +196,7 @@ class AlertBanner extends DataObject implements PermissionProvider
 
     public function getThemes()
     {
-        $themes = Config::inst()->get('AlertBanner', 'Themes');
-
-        $result = [];
-
-        foreach ($themes as $title => $theme) {
-            array_push(
-                $result,
-                $title
-            );
-        }
-
-        return $result;
-    }
-
-    public function getTheme()
-    {
-        $themes = array_values(Config::inst()->get('AlertBanner', 'Themes'));
-
-        return ArrayData::create([
-            'FontColor' => $themes[$this->CurrentTheme]['FontColor'],
-            'BGColor' => $themes[$this->CurrentTheme]['BGColor'],
-            'Icon' => $themes[$this->CurrentTheme]['Icon']
-        ]);
-    }
-
-    public function getThemeTitle()
-    {
-        $themes = array_values(Config::inst()->get('AlertBanner', 'Themes'));
-
-        if (!$themes) {
-            return false;
-        }
-
-        if (!isset($themes[$this->CurrentTheme]['Title'])) {
-            return false;
-        }
-
-        return $themes[$this->CurrentTheme]['Title'];
+        return Config::inst()->get('DNADesign\AlertBanner\AlertBanner', 'Themes');
     }
 
     public function providePermissions()
@@ -245,6 +207,15 @@ class AlertBanner extends DataObject implements PermissionProvider
                 'category' => 'Alerts',
             ),
         );
+    }
+
+    public function getThemeTitle()
+    {
+        if (!$this->dbObject('CurrentTheme')->exists()) {
+            return false;
+        }
+
+        return Config::inst()->get('DNADesign\AlertBanner\AlertBanner', 'Themes')[$this->CurrentTheme];
     }
 
     public function canView($member = null)
