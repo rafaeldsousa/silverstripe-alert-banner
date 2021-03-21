@@ -10,10 +10,6 @@ SilverStripe\Control\Director:
   rules:
     'alerts': 'DNADesign\AlertBanner\AlertBannerController'
 
-# DNADesign\AlertBanner\AlertBanner:
-  # Themes:
-  #   Default:
-  #     Title: 'Default Theme'
-  #     FontColor: '#000000'
-  #     BGColor: '#FFFFFF'
-  #     Icon: 'cross-red'
+DNADesign\AlertBanner\AlertBanner:
+  Themes:
+    - default
